@@ -231,14 +231,14 @@ class Circ:
 			if (norm != ""):
 				e = norm[1:]
 			if (raiz != ""):
-				e += "\sqrt{" + raiz[1:] + "}"
+				e += r"\sqrt{" + raiz[1:] + "}"
 
 			#print(e)
 			e = e.replace("*","")
 			e = e.replace("x","f_A")
 			e = e.replace("y","f_B")
 			if 'H' in e:
-				e = e.replace("H","\\frac{1}{\sqrt{2}}(")
+				e = e.replace("H","\\frac{1}{\\sqrt{2}}(")
 				ef = " + " + e + ")" + "|" + pv[1] + "\\rangle"
 				#print(ef)
 			else:
@@ -545,7 +545,7 @@ class Circ:
 		latexCirc = self.toLatex(circ[1])
 		latexCirc = latexCirc.replace("\\tof", "T")
 
-		expr = reversed(latexCirc.split(" \circ "))
+		expr = reversed(latexCirc.split(r" \circ "))
 
 		var = circ[2].split(",")
 
@@ -560,7 +560,7 @@ class Circ:
 \\tikzstyle{operator} = [draw,fill=white,minimum size=1.4em]
 \\tikzstyle{bullet} = [fill,shape=circle,minimum size=5pt,inner sep=0pt]
 \\tikzset{XOR/.style={draw,circle,append after command={
-\t\t\t[shorten >=\pgflinewidth, shorten <=\pgflinewidth,]
+\t\t\t[shorten >=\\pgflinewidth, shorten <=\\pgflinewidth,]
 \t\t\t(\\tikzlastnode.north) edge (\\tikzlastnode.south)
 \t\t\t(\\tikzlastnode.east) edge (\\tikzlastnode.west)
 \t\t}
@@ -690,4 +690,4 @@ class Circ:
 				formula.append("V^{"+j+"}_{"+ s[2]+"}")	
 			#print(formula)
 		
-		return (" \circ ".join(reversed(formula)))
+		return (r" \circ ".join(reversed(formula)))

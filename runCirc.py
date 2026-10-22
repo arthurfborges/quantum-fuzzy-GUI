@@ -9,9 +9,9 @@ if len(sys.argv) < 2:
 circ = Circ.Circ()
 
 operator = sys.argv[1]
-#circuit = circ.fuzzySquare.get(operator)
+circuit = circ.fuzzySquare.get(operator)
 #circuit =circ.intFuzzy.get(operator)
-circuit = circ.fuzzy.get(operator)
+#circuit = circ.fuzzy.get(operator)
 #circuit = circ.entradaClassica.get(operator)
 
 if circuit == None:
