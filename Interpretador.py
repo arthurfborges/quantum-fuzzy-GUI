@@ -62,7 +62,7 @@ class Interpretador:
 		self.operadores["It"] = "E-(N(x),T(x,y))"
 		self.operadores["Jt"] = "D-(N(x),S(x,y))"
 
-		self.fuzzy["Possibility"] = "T(x,N(y))"
+		self.operadores["Possibility"] = "T(x,N(y))"
 
 	def parseOperator(self, operador, values = None):
 		op = self.operadores.get(operador)
