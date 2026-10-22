@@ -19,7 +19,7 @@ if circuit == None:
 	sys.exit()
 
 circ.executeCirc(circuit)
-print(circ.toLatexCircFuzzy(operator))
+print(circ.toLatexCirc(circuit))
 print (circ.toLatex(circuit[1]))
 
 interp = Interpretador.Interpretador()
