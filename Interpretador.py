@@ -63,33 +63,49 @@ class Interpretador:
 		self.operadores["Jt"] = "D-(N(x),S(x,y))"
 
 		self.operadores["Possibility"] = "T(x,N(y))"
+###########################################
 
-	def parseOperator(self, operador, values = None):
-		op = self.operadores.get(operador)
-		if op == None:
-			print ("Operador não encontrado", operador)
-			return {}
+		self.operadoresFuzzySquare = {}
+
+		self.operadoresFuzzySquare = {}
+
+		self.operadoresFuzzySquare["AND"] = "T(T(x,x),T(y,y))"
+		self.operadoresFuzzySquare["OR"] = "S(T(x,x),T(y,y))"
+
+		self.operadoresFuzzySquare["IMPgn"] = "N(T(T(x,x),T(N(y),N(y))))"
+		self.operadoresFuzzySquare["COIMPgn"] = "T(T(N(x),N(x)),T(y,y))"
+
+		self.operadoresFuzzySquare["Overlap"] = "O(x,y)"
+		self.operadoresFuzzySquare["Grouping"] = "G(x,y)"
+
+		self.operadoresFuzzySquare["EGroupingOverlap"] = "T(G(x,y),N(O(x,y)))"
+		self.operadoresFuzzySquare["DGroupingOverlap"] = "T(O(x,y),N(G(x,y)))"
+
 		
+	def parseOperator(self, operador, values=None, architecture="fuzzy"):
+		catalogos = {
+			"fuzzy": self.operadores,
+			"fuzzySquare": self.operadoresFuzzySquare
+		}
+
+		if architecture not in catalogos:
+			raise ValueError(
+				f"Arquitetura desconhecida: {architecture}"
+			)
+
+		op = catalogos[architecture].get(operador)
+
+		if op is None:
+			print("Operador não encontrado:", operador)
+			return {}
+
 		expressions = self.parserExp(op, values)
-		for exp in expressions:
-			print (exp, "\t", expressions[exp])
 
-	def parserExp(self, string, values = None):
-		baseExp = self.parserString(string)
-		exp = baseExp
+		for nome, resultado in expressions.items():
+			print(nome, "\t", resultado)
 
-		if values != None:
-			exp = exp.replace("x", values[0])
-			exp = exp.replace("y", values[1])
-
-		expanded = expand(exp)
-		lat = latex(expanded)
-
-		lat2 = lat.replace("x", "f_A(x)")
-		lat2 = lat2.replace("y", "f_B(x)")
-
-		return { "normal": exp, "expand": expanded, "latex1": lat, "latex2": lat2}
-
+		return expressions
+	
 	def parserString(self, string):
 		if (len(string) == 1):
 			return string[0]
